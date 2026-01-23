@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audio_guide/models/audio_lang_model.dart';
 import 'package:audio_guide/models/audio_list_model.dart';
 import 'package:audio_guide/repository/audio_repository.dart';
 import 'package:audio_guide/screen/home/models/audio_item_model.dart';
@@ -7,6 +8,7 @@ import 'package:audio_guide/utils/file_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/api_result.dart';
+import '../../../constants.dart';
 import '../models/home_state.dart';
 
 final homeNotifier = NotifierProvider.autoDispose<HomeNotifier, HomeState>(() {
@@ -97,6 +99,22 @@ class HomeNotifier extends AutoDisposeNotifier<HomeState> {
       status: downloadStatus,
     );
     state = state.copyWith(audioItemList: newList);
+  }
+
+  AudioLangModel getCurrentAudioLang() {
+    final langText = FileUtils.getAudioLangText();
+    for (final item in AppConstants.audioLangList) {
+      if (item.text == langText) {
+        return item;
+      }
+    }
+    return AppConstants.audioLangList[0];
+  }
+
+  Future<void> setAudioLang(AudioLangModel langModel) async {
+    state = HomeState(audioItemList: [], isLoading: true);
+    await FileUtils.setAudioLangText(langModel.tag);
+    await getAudioFirstPage();
   }
 
   Future<List<AudioItemModel>> _checkLocalFiles(List<AudioModel> audioModelList) async {

@@ -1,11 +1,13 @@
 import 'package:audio_guide/route/args/player_screen_args.dart';
 import 'package:audio_guide/route/route_constants.dart';
 import 'package:audio_guide/screen/home/widgets/audio_item.dart';
+import 'package:audio_guide/screen/home/widgets/lang_dropdown_button.dart';
 import 'package:audio_guide/theme/app_value.dart';
 import 'package:audio_guide/widgets/error_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../models/audio_lang_model.dart';
 import 'models/audio_item_model.dart';
 import 'models/home_state.dart';
 import 'notifiers/home_notifier.dart';
@@ -42,6 +44,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('語音導覽列表'),
+        actions: [
+          LangDropdownButton(
+            selectedLangModel: notifier.getCurrentAudioLang(),
+            onChanged: (AudioLangModel langModel) {
+              notifier.setAudioLang(langModel);
+            },
+          ),
+          const SizedBox(width: AppValue.defaultPadding / 2)
+        ],
       ),
       body: SafeArea(
         child: Expanded(child: _buildListView(state, notifier)),

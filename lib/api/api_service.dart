@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:audio_guide/api/api_result.dart';
+import 'package:audio_guide/utils/file_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../constants.dart';
 import 'api_manager.dart';
 
 final apiServiceProvider = Provider<ApiService>((ref) {
@@ -18,7 +18,7 @@ class ApiService {
   final ApiManager _api;
 
   Future<ApiResult<Response>> getAudioList(int page) {
-    return _api.get('/${ApiConstants.defaultAudioLang}/Media/Audio', params: {'page': page});
+    return _api.get('/${FileUtils.getAudioLangText()}/Media/Audio', params: {'page': page});
   }
 
   Future<ApiResult<File>> downloadAudio(String url, String fileName, void Function(int received, int total)? onProgress) {
