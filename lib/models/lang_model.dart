@@ -14,5 +14,5 @@ class LangModel {
   final String apiText;
   final Locale locale;
 
-  LangModel(this.tag, this.label, this.apiText, this.locale);
+  const LangModel(this.tag, this.label, this.apiText, this.locale);
 }

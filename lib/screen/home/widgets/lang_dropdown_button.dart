@@ -1,11 +1,10 @@
+import 'package:audio_guide/constants.dart';
 import 'package:audio_guide/models/lang_model.dart';
-import 'package:audio_guide/riverpod/local_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_colors.dart';
 
-class LangDropdownButton extends ConsumerWidget {
+class LangDropdownButton extends StatelessWidget {
   const LangDropdownButton({
     super.key,
     required this.selectedLangModel,
@@ -16,9 +15,8 @@ class LangDropdownButton extends ConsumerWidget {
   final void Function(LangTag langTag) onChanged;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(localNotifier.notifier);
-    final langList = notifier.supportedLangList;
+  Widget build(BuildContext context) {
+    final langList = AppConstants.supportedLangList;
     return DropdownButton<LangModel>(
       menuWidth: 160,
       value: selectedLangModel,

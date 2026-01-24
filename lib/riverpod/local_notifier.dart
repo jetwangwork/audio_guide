@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:audio_guide/constants.dart';
 import 'package:audio_guide/models/lang_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,15 +11,7 @@ final localNotifier = NotifierProvider<LocalNotifier, LangModel>(() {
 class LocalNotifier extends Notifier<LangModel> {
 
   LangModel get currentLang => state;
-  List<LangModel> get supportedLangList => List.of(_langList);
-
-  final List<LangModel> _langList = [
-    LangModel(LangTag.tw, '繁體中文', 'zh-tw', Locale('zh', 'TW')),
-    LangModel(LangTag.cn, '简体中文', 'zh-cn', Locale('zh', 'CN')),
-    LangModel(LangTag.en, 'English', 'en', Locale('en')),
-    LangModel(LangTag.jp, '日本語', 'ja', Locale('ja')),
-    LangModel(LangTag.kr, '한국어', 'ko', Locale('ko')),
-  ];
+  final List<LangModel> _supportedLangList = AppConstants.supportedLangList;
 
   @override
   LangModel build() {
@@ -31,21 +22,21 @@ class LocalNotifier extends Notifier<LangModel> {
   LangModel _loadLang() {
     final String languageTagName = SharedPref().getValue(
         SharedPrefKeys.languageTagName,
-        _langList[0].tag.name
+        _supportedLangList[0].tag.name
     ) as String;
 
-    for (final item in _langList) {
+    for (final item in _supportedLangList) {
       if (item.tag.name == languageTagName) {
         return item;
       }
     }
 
-    return _langList[0];
+    return _supportedLangList[0];
   }
 
   // 設定語言並保存
   Future<void> setLang(LangTag langTag) async {
-    for (final item in _langList) {
+    for (final item in _supportedLangList) {
       if (item.tag == langTag) {
         state = item;
         await SharedPref().setValue(SharedPrefKeys.languageTagName, item.tag.name);
