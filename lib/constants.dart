@@ -1,15 +1,5 @@
-import 'dart:ui';
-
-import 'models/lang_model.dart';
-
 class AppConstants {
-  static final List<LangModel> langList = [
-    LangModel(LangTag.tw, '繁體中文', 'zh-tw', Locale('zh', 'TW')),
-    LangModel(LangTag.cn, '简体中文', 'zh-cn', Locale('zh', 'CN')),
-    LangModel(LangTag.en, 'English', 'en', Locale('en')),
-    LangModel(LangTag.jp, '日本語', 'ja', Locale('ja')),
-    LangModel(LangTag.kr, '한국어', 'ko', Locale('ko')),
-  ];
+
 }
 
 class ApiConstants {
