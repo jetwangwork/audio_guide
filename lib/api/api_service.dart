@@ -9,18 +9,18 @@ import 'api_manager.dart';
 
 final apiServiceProvider = Provider<ApiService>((ref) {
   final api = ref.watch(apiManagerProvider);
-  return ApiService._internal(api, ref);
+  final notifier = ref.read(localNotifier.notifier);
+  return ApiService._internal(api, notifier);
 });
 
 class ApiService {
-  ApiService._internal(this._api, this._ref);
+  ApiService._internal(this._api, this._localNotifier);
 
   final ApiManager _api;
-  final Ref _ref;
+  final LocalNotifier _localNotifier;
 
   Future<ApiResult<Response>> getAudioList(int page) {
-    final notifier = _ref.read(localNotifier.notifier);
-    return _api.get('/${notifier.getLangText()}/Media/Audio', params: {'page': page});
+    return _api.get('/${_localNotifier.getLangText()}/Media/Audio', params: {'page': page});
   }
 
   Future<ApiResult<File>> downloadAudio(String url, String fileName, {void Function(int received, int total)? onProgress}) {

@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:audio_guide/models/lang_model.dart';
-import 'package:audio_guide/models/audio_list_model.dart';
 import 'package:audio_guide/repository/audio_repository.dart';
 import 'package:audio_guide/screen/home/models/audio_item_model.dart';
 import 'package:audio_guide/utils/file_utils.dart';
@@ -34,9 +31,9 @@ class HomeNotifier extends AutoDisposeNotifier<HomeState> {
     final result = await _repo.getAudioList(1);
     switch (result) {
       case ApiSuccess(data: final data):
-        final audioItemList = await _checkLocalFiles(data.data);
-
+        final audioItemList = await _repo.checkLocalFiles(data.data);
         final int totalPage = (data.total / 30).toInt() + 1;
+
         state = state.copyWith(
           isLoading: false,
           audioItemList: audioItemList,
@@ -61,7 +58,7 @@ class HomeNotifier extends AutoDisposeNotifier<HomeState> {
     final result = await _repo.getAudioList(state.currentPage + 1);
     switch (result) {
       case ApiSuccess(data: final data):
-        final audioItemList = await _checkLocalFiles(data.data);;
+        final audioItemList = await _repo.checkLocalFiles(data.data);
 
         state = state.copyWith(
             isLoading: false,
@@ -113,14 +110,5 @@ class HomeNotifier extends AutoDisposeNotifier<HomeState> {
     state = HomeState(audioItemList: [], isLoading: true);
     await _localNotifier.setLang(langTag);
     await getAudioFirstPage();
-  }
-
-  Future<List<AudioItemModel>> _checkLocalFiles(List<AudioModel> audioModelList) async {
-    return await Future.wait(audioModelList.map((e) async {
-      final filePath = await FileUtils.getAudioFilePath(_localNotifier.getLangText(), e.id);
-      final file = File(filePath);
-      final exists = await file.exists();
-      return AudioItemModel(id: e.id, title: e.title, url: e.url, status: exists ? DownloadStatus.downloaded : DownloadStatus.notDownloaded);
-    }));
   }
 }

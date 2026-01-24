@@ -1,4 +1,4 @@
-import '../../../models/audio_list_model.dart';
+import '../../../models/api/audio_list_model.dart';
 
 enum DownloadStatus { notDownloaded, downloading, downloaded, failed }
 
