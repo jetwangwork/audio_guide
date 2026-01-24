@@ -1,0 +1,9 @@
+{
+  "@@locale": "ko",
+
+  "HomeScreen_title": "오디오 가이드",
+  "HomeScreen_download_button": "다운로드",
+  "HomeScreen_play_button": "재생",
+
+  "PlayerScreen_title": "플레이어"
+}

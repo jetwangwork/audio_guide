@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+
+  "HomeScreen_title": "Audio Guide",
+  "HomeScreen_download_button": "Download",
+  "HomeScreen_play_button": "Play",
+
+  "PlayerScreen_title": "Player"
+}

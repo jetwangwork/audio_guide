@@ -1,0 +1,9 @@
+{
+  "@@locale": "ja",
+
+  "HomeScreen_title": "音声ガイド",
+  "HomeScreen_download_button": "ダウンロード",
+  "HomeScreen_play_button": "再生",
+
+  "PlayerScreen_title": "プレーヤー"
+}

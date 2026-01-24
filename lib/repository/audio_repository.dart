@@ -26,7 +26,7 @@ class AudioRepository {
   }
 
   Future<ApiResult<String>> downloadAudio(String url, String fileName) async {
-    final result = await _api.downloadAudio(url, fileName, (received, total) {
+    final result = await _api.downloadAudio(url, fileName, onProgress: (received, total) {
       if (total > 0) {
         final progress = received / total;
         debugPrint('progress: $progress');

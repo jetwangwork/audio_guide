@@ -7,7 +7,8 @@ import 'package:audio_guide/widgets/error_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/audio_lang_model.dart';
+import '../../generated/l10n.dart';
+import '../../models/lang_model.dart';
 import 'models/audio_item_model.dart';
 import 'models/home_state.dart';
 import 'notifiers/home_notifier.dart';
@@ -43,12 +44,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final notifier = ref.read(homeNotifier.notifier);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('語音導覽列表'),
+        title: Text(S.of(context).HomeScreen_title),
         actions: [
           LangDropdownButton(
-            selectedLangModel: notifier.getCurrentAudioLang(),
-            onChanged: (AudioLangModel langModel) {
-              notifier.setAudioLang(langModel);
+            selectedLangModel: notifier.getLang(),
+            onChanged: (LangTag langTag) {
+              notifier.setLang(langTag);
             },
           ),
           const SizedBox(width: AppValue.defaultPadding / 2)

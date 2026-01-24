@@ -1,12 +1,14 @@
-import 'models/audio_lang_model.dart';
+import 'dart:ui';
+
+import 'models/lang_model.dart';
 
 class AppConstants {
-  static final List<AudioLangModel> audioLangList = [
-    AudioLangModel(AudioLangTag.tw, 'zh-tw'),
-    AudioLangModel(AudioLangTag.cn, 'zh-cn'),
-    AudioLangModel(AudioLangTag.en, 'en'),
-    AudioLangModel(AudioLangTag.jp, 'ja'),
-    AudioLangModel(AudioLangTag.kr, 'ko'),
+  static final List<LangModel> langList = [
+    LangModel(LangTag.tw, '繁體中文', Locale('zh', 'TW')),
+    LangModel(LangTag.cn, '简体中文', Locale('zh', 'CN')),
+    LangModel(LangTag.en, 'English', Locale('en')),
+    LangModel(LangTag.jp, '日本語', Locale('ja')),
+    LangModel(LangTag.kr, '한국어', Locale('ko')),
   ];
 }
 

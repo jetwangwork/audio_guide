@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   flutter_riverpod: ^2.0.0
   dio: ^5.3.3
   path_provider: ^2.1.2
@@ -22,3 +25,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+# flutter_intl 插件設定
+flutter_intl:
+  enabled: true                         # 啟用 flutter_intl 插件
+  class_name: S                         # 生成的類名（默認為 S）
+  main_locale: zh_TW                    # 預設語言，例如 'en'（英文）
+  arb_dir: lib/localization/l10n        # 指定 .arb 文件夾的路徑
+  output_dir: lib/generated             # 指定 .dart 文件輸出的路徑

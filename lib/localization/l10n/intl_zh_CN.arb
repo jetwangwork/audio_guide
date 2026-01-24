@@ -1,0 +1,9 @@
+{
+  "@@locale": "zh_CN",
+
+  "HomeScreen_title": "语音导览",
+  "HomeScreen_download_button": "下载",
+  "HomeScreen_play_button": "播放",
+
+  "PlayerScreen_title": "播放器"
+}

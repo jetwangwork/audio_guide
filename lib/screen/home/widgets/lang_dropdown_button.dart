@@ -1,9 +1,8 @@
 import 'package:audio_guide/constants.dart';
-import 'package:audio_guide/models/audio_lang_model.dart';
+import 'package:audio_guide/models/lang_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_colors.dart';
-
 
 class LangDropdownButton extends StatelessWidget {
   const LangDropdownButton({
@@ -12,13 +11,13 @@ class LangDropdownButton extends StatelessWidget {
     required this.onChanged,
   });
 
-  final AudioLangModel selectedLangModel;
-  final void Function(AudioLangModel langModel) onChanged;
+  final LangModel selectedLangModel;
+  final void Function(LangTag langTag) onChanged;
 
   @override
   Widget build(BuildContext context) {
-    final items = AppConstants.audioLangList;
-    return DropdownButton<AudioLangModel>(
+    final items = AppConstants.langList;
+    return DropdownButton<LangModel>(
       menuWidth: 160,
       value: selectedLangModel,
       icon: const Padding(
@@ -31,13 +30,13 @@ class LangDropdownButton extends StatelessWidget {
       ),
       onChanged: (value) {
         if (value != null && value != selectedLangModel) {
-          onChanged(value);
+          onChanged(value.tag);
         }
       },
       underline: const SizedBox(),
       selectedItemBuilder: (_) => items.map((e) => const SizedBox()).toList(),
       items: items.map((item) {
-        return DropdownMenuItem<AudioLangModel>(
+        return DropdownMenuItem<LangModel>(
           value: item,
           child: Row(
             children: [
@@ -49,7 +48,7 @@ class LangDropdownButton extends StatelessWidget {
                 color: AppColors.primaryColor,
               ),
               const SizedBox(width: 8),
-              Text(item.tag.name.toUpperCase()),
+              Text(item.label),
             ],
           ),
         );

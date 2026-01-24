@@ -1,3 +1,4 @@
+import 'package:audio_guide/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_value.dart';
@@ -16,7 +17,7 @@ class AudioPlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.grey,
+      color: AppColors.primaryColor,
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),

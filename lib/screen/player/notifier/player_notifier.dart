@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 
+import '../../../riverpod/local_notifier.dart';
 import '../models/player_audio_state.dart';
 
 final playerNotifier = NotifierProvider.autoDispose<PlayerNotifier, PlayerAudioState>(() {
@@ -12,9 +13,12 @@ final playerNotifier = NotifierProvider.autoDispose<PlayerNotifier, PlayerAudioS
 class PlayerNotifier extends AutoDisposeNotifier<PlayerAudioState> {
 
   final _player = AudioPlayer();
+  late final LocalNotifier _localNotifier;
 
   @override
   PlayerAudioState build() {
+    _localNotifier = ref.read(localNotifier.notifier);
+
     _player.playerStateStream.listen((playerState) {
       final processingState = playerState.processingState;
 
@@ -34,8 +38,8 @@ class PlayerNotifier extends AutoDisposeNotifier<PlayerAudioState> {
   }
 
   Future<void> initPlayer(String title, id) async {
-    final fileName = FileUtils.getAudioFileName(id);
-    final filePath = await FileUtils.getAudioFilePath(id);
+    final fileName = FileUtils.getAudioFileName(_localNotifier.getLangText(), id);
+    final filePath = await FileUtils.getAudioFilePath(_localNotifier.getLangText(), id);
     await _player.setFilePath(filePath);
     state = state.copyWith(title: title, fileName: fileName);
   }

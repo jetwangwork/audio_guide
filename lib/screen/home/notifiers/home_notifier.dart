@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:audio_guide/models/audio_lang_model.dart';
+import 'package:audio_guide/models/lang_model.dart';
 import 'package:audio_guide/models/audio_list_model.dart';
 import 'package:audio_guide/repository/audio_repository.dart';
 import 'package:audio_guide/screen/home/models/audio_item_model.dart';
@@ -8,7 +8,7 @@ import 'package:audio_guide/utils/file_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/api_result.dart';
-import '../../../constants.dart';
+import '../../../riverpod/local_notifier.dart';
 import '../models/home_state.dart';
 
 final homeNotifier = NotifierProvider.autoDispose<HomeNotifier, HomeState>(() {
@@ -18,10 +18,13 @@ final homeNotifier = NotifierProvider.autoDispose<HomeNotifier, HomeState>(() {
 class HomeNotifier extends AutoDisposeNotifier<HomeState> {
 
   late final AudioRepository _repo;
+  late final LocalNotifier _localNotifier;
 
   @override
   HomeState build() {
     _repo = ref.read(audioRepositoryProvider);
+    _localNotifier = ref.read(localNotifier.notifier);
+
     state = HomeState(audioItemList: [], isLoading: true);
     getAudioFirstPage();
     return state;
@@ -84,7 +87,8 @@ class HomeNotifier extends AutoDisposeNotifier<HomeState> {
     state = state.copyWith(audioItemList: tempList);
 
     late final downloadStatus;
-    final result = await _repo.downloadAudio(state.audioItemList[index].url, FileUtils.getAudioFileName(state.audioItemList[index].id));
+    final fileName = FileUtils.getAudioFileName(_localNotifier.getLangText(), state.audioItemList[index].id);
+    final result = await _repo.downloadAudio(state.audioItemList[index].url, fileName);
     switch (result) {
       case ApiSuccess(data: final path):
         downloadStatus = DownloadStatus.downloaded;
@@ -101,25 +105,19 @@ class HomeNotifier extends AutoDisposeNotifier<HomeState> {
     state = state.copyWith(audioItemList: newList);
   }
 
-  AudioLangModel getCurrentAudioLang() {
-    final langText = FileUtils.getAudioLangText();
-    for (final item in AppConstants.audioLangList) {
-      if (item.text == langText) {
-        return item;
-      }
-    }
-    return AppConstants.audioLangList[0];
+  LangModel getLang() {
+    return _localNotifier.currentLang;
   }
 
-  Future<void> setAudioLang(AudioLangModel langModel) async {
+  Future<void> setLang(LangTag langTag) async {
     state = HomeState(audioItemList: [], isLoading: true);
-    await FileUtils.setAudioLangText(langModel.tag);
+    await _localNotifier.setLang(langTag);
     await getAudioFirstPage();
   }
 
   Future<List<AudioItemModel>> _checkLocalFiles(List<AudioModel> audioModelList) async {
     return await Future.wait(audioModelList.map((e) async {
-      final filePath = await FileUtils.getAudioFilePath(e.id);
+      final filePath = await FileUtils.getAudioFilePath(_localNotifier.getLangText(), e.id);
       final file = File(filePath);
       final exists = await file.exists();
       return AudioItemModel(id: e.id, title: e.title, url: e.url, status: exists ? DownloadStatus.downloaded : DownloadStatus.notDownloaded);

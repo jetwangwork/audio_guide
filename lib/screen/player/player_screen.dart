@@ -4,6 +4,7 @@ import 'package:audio_guide/theme/app_value.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../generated/l10n.dart';
 import 'models/player_audio_state.dart';
 
 class PlayerScreen extends ConsumerStatefulWidget {
@@ -35,7 +36,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     final notifier = ref.read(playerNotifier.notifier);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('播放器'),
+        title: Text(S.of(context).PlayerScreen_title),
       ),
       body: SafeArea(
         child: Center(

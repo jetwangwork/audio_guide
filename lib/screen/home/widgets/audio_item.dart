@@ -1,6 +1,7 @@
 import 'package:audio_guide/screen/home/models/audio_item_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../generated/l10n.dart';
 import '../../../theme/app_value.dart';
 
 class AudioItem extends StatelessWidget {
@@ -33,16 +34,20 @@ class AudioItem extends StatelessWidget {
             ],
           ),
           child: ListTile(
-            title: Text(audioItemModel.title),
-            trailing: _buildButton(),
+            title: Text(
+              audioItemModel.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: _buildButton(context),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildButton() {
-    final buttonText = audioItemModel.status == DownloadStatus.downloaded ? '播放' : '下載';
+  Widget _buildButton(BuildContext context) {
+    final buttonText = audioItemModel.status == DownloadStatus.downloaded ? S.of(context).HomeScreen_play_button : S.of(context).HomeScreen_download_button;
     switch (audioItemModel.status) {
       case DownloadStatus.downloading:
         return ElevatedButton(

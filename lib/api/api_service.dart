@@ -1,27 +1,29 @@
 import 'dart:io';
 
 import 'package:audio_guide/api/api_result.dart';
-import 'package:audio_guide/utils/file_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../riverpod/local_notifier.dart';
 import 'api_manager.dart';
 
 final apiServiceProvider = Provider<ApiService>((ref) {
   final api = ref.watch(apiManagerProvider);
-  return ApiService._internal(api);
+  return ApiService._internal(api, ref);
 });
 
 class ApiService {
-  ApiService._internal(this._api);
+  ApiService._internal(this._api, this._ref);
 
   final ApiManager _api;
+  final Ref _ref;
 
   Future<ApiResult<Response>> getAudioList(int page) {
-    return _api.get('/${FileUtils.getAudioLangText()}/Media/Audio', params: {'page': page});
+    final notifier = _ref.read(localNotifier.notifier);
+    return _api.get('/${notifier.getLangText()}/Media/Audio', params: {'page': page});
   }
 
-  Future<ApiResult<File>> downloadAudio(String url, String fileName, void Function(int received, int total)? onProgress) {
+  Future<ApiResult<File>> downloadAudio(String url, String fileName, {void Function(int received, int total)? onProgress}) {
     return _api.downloadFile(url: url, fileName: fileName, onProgress: onProgress);
   }
 }
