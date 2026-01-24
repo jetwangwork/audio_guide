@@ -11,7 +11,8 @@ enum LangTag {
 class LangModel {
   final LangTag tag;
   final String label;
+  final String apiText;
   final Locale locale;
 
-  LangModel(this.tag, this.label, this.locale);
+  LangModel(this.tag, this.label, this.apiText, this.locale);
 }

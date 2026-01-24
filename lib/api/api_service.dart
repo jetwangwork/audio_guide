@@ -20,7 +20,7 @@ class ApiService {
   final LocalNotifier _localNotifier;
 
   Future<ApiResult<Response>> getAudioList(int page) {
-    return _api.get('/${_localNotifier.getCurrentLangText()}/Media/Audio', params: {'page': page});
+    return _api.get('/${_localNotifier.currentLang.apiText}/Media/Audio', params: {'page': page});
   }
 
   Future<ApiResult<File>> downloadAudio(String url, String fileName, {void Function(int received, int total)? onProgress}) {

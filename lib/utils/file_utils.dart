@@ -3,13 +3,13 @@ import 'package:path_provider/path_provider.dart';
 class FileUtils {
   FileUtils._internal();
 
-  static Future<String> getAudioFilePath(String langText, int audioId) async {
-    final fileName = FileUtils.getAudioFileName(langText, audioId);
+  static Future<String> getAudioFilePath(String apiText, int audioId) async {
+    final fileName = FileUtils.getAudioFileName(apiText, audioId);
     final dir = await getApplicationDocumentsDirectory();
     return '${dir.path}/${fileName}';
   }
 
-  static String getAudioFileName(String langText, int audioId) {
-    return '${langText}-${audioId}.mp3';
+  static String getAudioFileName(String apiText, int audioId) {
+    return '${apiText}-${audioId}.mp3';
   }
 }

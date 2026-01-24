@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefKeys {
   SharedPrefKeys._internal();
 
-  static const String languageText = "languageText";
+  static const String languageTagName = "languageTagName";
 }
 
 class SharedPref {

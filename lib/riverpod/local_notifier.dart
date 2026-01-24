@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:audio_guide/constants.dart';
 import 'package:audio_guide/models/lang_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../generated/l10n.dart';
 import '../utils/shared_pref.dart';
 
 final localNotifier = NotifierProvider<LocalNotifier, LangModel>(() {
@@ -22,13 +19,13 @@ class LocalNotifier extends Notifier<LangModel> {
 
   // 讀取語言設定
   LangModel _loadLang() {
-    final String languageText = SharedPref().getValue(
-        SharedPrefKeys.languageText,
-        _getLangText(S.delegate.supportedLocales.first)
+    final String languageTagName = SharedPref().getValue(
+        SharedPrefKeys.languageTagName,
+        AppConstants.langList[0].tag.name
     ) as String;
 
     for (final item in AppConstants.langList) {
-      if (_getLangText(item.locale) == languageText) {
+      if (item.tag.name == languageTagName) {
         return item;
       }
     }
@@ -41,20 +38,8 @@ class LocalNotifier extends Notifier<LangModel> {
     for (final item in AppConstants.langList) {
       if (item.tag == langTag) {
         state = item;
-        await SharedPref().setValue(SharedPrefKeys.languageText, _getLangText(item.locale));
+        await SharedPref().setValue(SharedPrefKeys.languageTagName, item.tag.name);
       }
-    }
-  }
-
-  String getCurrentLangText() {
-    return _getLangText(state.locale);
-  }
-
-  String _getLangText(Locale locale) {
-    if (locale.countryCode != null) {
-      return '${locale.languageCode}-${locale.countryCode}'.toLowerCase();
-    } else {
-      return locale.languageCode.toLowerCase();
     }
   }
 }

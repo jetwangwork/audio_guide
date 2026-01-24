@@ -38,8 +38,8 @@ class PlayerNotifier extends AutoDisposeNotifier<PlayerAudioState> {
   }
 
   Future<void> initPlayer(String title, id) async {
-    final fileName = FileUtils.getAudioFileName(_localNotifier.getCurrentLangText(), id);
-    final filePath = await FileUtils.getAudioFilePath(_localNotifier.getCurrentLangText(), id);
+    final fileName = FileUtils.getAudioFileName(_localNotifier.currentLang.apiText, id);
+    final filePath = await FileUtils.getAudioFilePath(_localNotifier.currentLang.apiText, id);
     await _player.setFilePath(filePath);
     state = state.copyWith(title: title, fileName: fileName);
   }

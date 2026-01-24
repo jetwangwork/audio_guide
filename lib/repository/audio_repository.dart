@@ -52,7 +52,7 @@ class AudioRepository {
 
   Future<List<AudioItemModel>> checkLocalFiles(List<AudioModel> audioModelList) async {
     return await Future.wait(audioModelList.map((e) async {
-      final filePath = await FileUtils.getAudioFilePath(_localNotifier.getCurrentLangText(), e.id);
+      final filePath = await FileUtils.getAudioFilePath(_localNotifier.currentLang.apiText, e.id);
       final file = File(filePath);
       final exists = await file.exists();
       return AudioItemModel(id: e.id, title: e.title, url: e.url, status: exists ? DownloadStatus.downloaded : DownloadStatus.notDownloaded);
