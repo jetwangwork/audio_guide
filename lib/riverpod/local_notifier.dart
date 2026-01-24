@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:audio_guide/constants.dart';
 import 'package:audio_guide/models/lang_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,13 +22,13 @@ class LocalNotifier extends Notifier<LangModel> {
 
   // 讀取語言設定
   LangModel _getLang() {
-    final String languageCode = SharedPref().getValue(
-        SharedPrefKeys.languageCode,
-        S.delegate.supportedLocales.first.languageCode
+    final String languageText = SharedPref().getValue(
+        SharedPrefKeys.languageText,
+        _getLangText(S.delegate.supportedLocales.first)
     ) as String;
 
     for (final item in AppConstants.langList) {
-      if (item.locale.languageCode == languageCode) {
+      if (_getLangText(item.locale) == languageText) {
         return item;
       }
     }
@@ -39,16 +41,20 @@ class LocalNotifier extends Notifier<LangModel> {
     for (final item in AppConstants.langList) {
       if (item.tag == langTag) {
         state = item;
-        await SharedPref().setValue(SharedPrefKeys.languageCode, item.locale.languageCode);
+        await SharedPref().setValue(SharedPrefKeys.languageText, _getLangText(item.locale));
       }
     }
   }
 
-  String getLangText() {
-    if (state.locale.countryCode != null) {
-      return '${state.locale.languageCode}-${state.locale.countryCode}'.toLowerCase();
+  String getCurrentLangText() {
+    return _getLangText(state.locale);
+  }
+
+  String _getLangText(Locale locale) {
+    if (locale.countryCode != null) {
+      return '${locale.languageCode}-${locale.countryCode}'.toLowerCase();
     } else {
-      return state.locale.languageCode.toLowerCase();
+      return locale.languageCode.toLowerCase();
     }
   }
 }

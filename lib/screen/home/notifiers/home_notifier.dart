@@ -84,7 +84,7 @@ class HomeNotifier extends AutoDisposeNotifier<HomeState> {
     state = state.copyWith(audioItemList: tempList);
 
     late final downloadStatus;
-    final fileName = FileUtils.getAudioFileName(_localNotifier.getLangText(), state.audioItemList[index].id);
+    final fileName = FileUtils.getAudioFileName(_localNotifier.getCurrentLangText(), state.audioItemList[index].id);
     final result = await _repo.downloadAudio(state.audioItemList[index].url, fileName);
     switch (result) {
       case ApiSuccess(data: final path):
