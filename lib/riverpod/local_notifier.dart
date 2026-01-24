@@ -17,11 +17,11 @@ class LocalNotifier extends Notifier<LangModel> {
 
   @override
   LangModel build() {
-    return _getLang();
+    return _loadLang();
   }
 
   // 讀取語言設定
-  LangModel _getLang() {
+  LangModel _loadLang() {
     final String languageText = SharedPref().getValue(
         SharedPrefKeys.languageText,
         _getLangText(S.delegate.supportedLocales.first)
