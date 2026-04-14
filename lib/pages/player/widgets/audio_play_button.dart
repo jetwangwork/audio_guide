@@ -2,7 +2,7 @@ import 'package:audio_guide/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_value.dart';
-import '../models/player_audio_state.dart';
+import '../player_audio_state.dart';
 
 class AudioPlayButton extends StatelessWidget {
   const AudioPlayButton({

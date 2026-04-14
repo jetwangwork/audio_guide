@@ -1,4 +1,4 @@
-import 'package:audio_guide/screen/home/models/audio_item_model.dart';
+import 'package:audio_guide/pages/home/models/audio_item_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../generated/l10n.dart';

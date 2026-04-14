@@ -1,7 +1,7 @@
 import 'package:audio_guide/route/args/player_screen_args.dart';
 import 'package:audio_guide/route/route_constants.dart';
-import 'package:audio_guide/screen/home/widgets/audio_item.dart';
-import 'package:audio_guide/screen/home/widgets/lang_dropdown_button.dart';
+import 'package:audio_guide/pages/home/widgets/audio_item.dart';
+import 'package:audio_guide/pages/home/widgets/lang_dropdown_button.dart';
 import 'package:audio_guide/theme/app_value.dart';
 import 'package:audio_guide/widgets/error_icon.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +11,16 @@ import '../../generated/l10n.dart';
 import '../../models/lang_model.dart';
 import 'models/audio_item_model.dart';
 import 'models/home_state.dart';
-import 'notifiers/home_notifier.dart';
+import 'home_notifier.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen> {
+class _HomePageState extends ConsumerState<HomePage> {
   final _scrollController = ScrollController();
 
   @override

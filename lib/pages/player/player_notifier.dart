@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 
-import '../../../riverpod/local_notifier.dart';
-import '../models/player_audio_state.dart';
+import '../../riverpod/local_notifier.dart';
+import 'player_audio_state.dart';
 
 final playerNotifier = NotifierProvider.autoDispose<PlayerNotifier, PlayerAudioState>(() {
   return PlayerNotifier();

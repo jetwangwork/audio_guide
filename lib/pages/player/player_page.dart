@@ -1,14 +1,14 @@
-import 'package:audio_guide/screen/player/notifier/player_notifier.dart';
-import 'package:audio_guide/screen/player/widgets/audio_play_button.dart';
+import 'package:audio_guide/pages/player/player_notifier.dart';
+import 'package:audio_guide/pages/player/widgets/audio_play_button.dart';
 import 'package:audio_guide/theme/app_value.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n.dart';
-import 'models/player_audio_state.dart';
+import 'player_audio_state.dart';
 
-class PlayerScreen extends ConsumerStatefulWidget {
-  const PlayerScreen({
+class PlayerPage extends ConsumerStatefulWidget {
+  const PlayerPage({
     super.key,
     required this.id,
     required this.title
@@ -18,10 +18,10 @@ class PlayerScreen extends ConsumerStatefulWidget {
   final String title;
 
   @override
-  ConsumerState<PlayerScreen> createState() => _PlayerScreenState();
+  ConsumerState<PlayerPage> createState() => _PlayerScreenState();
 }
 
-class _PlayerScreenState extends ConsumerState<PlayerScreen> {
+class _PlayerScreenState extends ConsumerState<PlayerPage> {
 
   @override
   void initState() {

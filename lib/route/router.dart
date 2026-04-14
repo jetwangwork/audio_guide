@@ -7,18 +7,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case homeScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const HomePage(),
       );
 
     case playerScreenRoute:
       final args = settings.arguments as PlayerScreenArgs;
       return MaterialPageRoute(
-        builder: (context) => PlayerScreen(id: args.id, title: args.title),
+        builder: (context) => PlayerPage(id: args.id, title: args.title),
       );
 
     default:
       return MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const HomePage(),
       );
   }
 }
