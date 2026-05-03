@@ -56,7 +56,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
       body: SafeArea(
-        child: Expanded(child: _buildListView(state, notifier)),
+        child: _buildListView(state, notifier),
       ),
     );
   }
