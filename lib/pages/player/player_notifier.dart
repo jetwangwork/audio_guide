@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:audio_guide/utils/file_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,10 +39,15 @@ class PlayerNotifier extends AutoDisposeNotifier<PlayerAudioState> {
   }
 
   Future<void> initPlayer(String title, id) async {
-    final fileName = FileUtils.getAudioFileName(_localNotifier.currentLang.apiText, id);
-    final filePath = await FileUtils.getAudioFilePath(_localNotifier.currentLang.apiText, id);
-    await _player.setFilePath(filePath);
-    state = state.copyWith(title: title, fileName: fileName);
+    try {
+      final fileName = FileUtils.getAudioFileName(_localNotifier.currentLang.apiText, id);
+      final filePath = await FileUtils.getAudioFilePath(_localNotifier.currentLang.apiText, id);
+      await _player.setFilePath(filePath);
+      state = state.copyWith(title: title, fileName: fileName);
+    } catch (e) {
+      debugPrint('❌ 播放器初始化失敗: $e');
+      state = state.copyWith(title: title, fileName: 'Load failed');
+    }
   }
 
   void playOrPause() {
